@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Para ti ❤️</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E❤️%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,600&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+<style>
+/* ✏️ COLORES: cambia estos valores para personalizar la paleta */
+:root{--bg1:#fff4f6;--bg2:#ffd3df;--rose:#ff6f91;--red:#e11d48;--wine:#7a1530;--ink:#4a1020;--card:#ffffffd9}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg1:#2a0a17;--bg2:#4a1226;--ink:#ffe3ea;--wine:#ffb3c6;--card:#ffffff1f}}
+:root[data-theme="dark"]{--bg1:#2a0a17;--bg2:#4a1226;--ink:#ffe3ea;--wine:#ffb3c6;--card:#ffffff1f}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:radial-gradient(circle at 20% 10%,#fff 0,transparent 40%),linear-gradient(160deg,var(--bg1),var(--bg2));color:var(--ink);font-family:Quicksand,system-ui,sans-serif;overflow:hidden;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+#bg{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1}
+#bg span{position:absolute;bottom:-60px;animation:float linear infinite;opacity:0}
+@keyframes float{10%{opacity:.55}90%{opacity:.35}100%{transform:translateY(-115vh) rotate(25deg);opacity:0}}
+.screen{position:fixed;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:calc(24px + env(safe-area-inset-top,0px)) 22px calc(28px + env(safe-area-inset-bottom,0px));overflow-y:auto;-webkit-overflow-scrolling:touch;opacity:0;visibility:hidden;transform:scale(.96);transition:opacity .6s,transform .6s,visibility 0s .6s}
+.screen.on{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+#s1{touch-action:none;overflow:hidden}
+.pre{font-size:1.1rem;opacity:.7;margin:0}
+.q{font-family:Fraunces,Georgia,serif;font-style:italic;font-weight:600;font-size:clamp(2.7rem,13vw,4.8rem);color:var(--wine);line-height:1.02;margin:.25em 0 .7em;text-shadow:0 6px 24px #ff6f9144}
+button{font:inherit;cursor:pointer;border:0;border-radius:999px;padding:14px 30px;font-weight:700;font-size:1.1rem;touch-action:manipulation;-webkit-appearance:none}
+button:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+.btns{display:flex;gap:18px;align-items:center;justify-content:center;min-height:72px}
+.yes{background:linear-gradient(135deg,var(--rose),var(--red));color:#fff;box-shadow:0 10px 26px #e11d4855;transition:transform .3s;animation:beat 2.4s ease-in-out infinite}
+@keyframes beat{50%{box-shadow:0 10px 34px #e11d4899}}
+.no{background:var(--card);color:var(--wine);border:1.5px solid #ff6f9170;box-shadow:0 4px 14px #0002;transition:left .35s cubic-bezier(.34,1.56,.64,1),top .35s cubic-bezier(.34,1.56,.64,1),transform .3s}
+.no.fly{position:fixed;z-index:50;margin:0}
+.msg{min-height:2.4em;margin-top:22px;font-weight:700;color:var(--red);font-size:1.1rem}
+.pop{animation:pop .45s}
+@keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.08)}100%{transform:none;opacity:1}}
+.big{font-family:Fraunces,Georgia,serif;font-style:italic;font-weight:600;color:var(--wine);font-size:clamp(2rem,9vw,3.2rem);line-height:1.15;margin:0 0 .8em}
+.cta{background:linear-gradient(135deg,var(--rose),var(--red));color:#fff;box-shadow:0 10px 26px #e11d4844}
+.soft{background:var(--card);color:var(--wine);border:1.5px solid #ff6f9166}
+/* galería */
+#s3{justify-content:flex-start}
+.wrap{width:100%;max-width:560px}
+.sub{opacity:.75;margin:0 0 18px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.card{position:relative;border-radius:22px;overflow:hidden;background:#fff;aspect-ratio:3/4;box-shadow:0 12px 28px #e11d4826;transform:rotate(var(--r))}
+.card img{width:100%;height:100%;object-fit:cover;display:block;transition:filter 1s,transform 1s}
+.card.lock img{filter:blur(16px) saturate(.8);transform:scale(1.15)}
+.lockic{position:absolute;inset:0;display:grid;place-items:center;font-size:2.5rem;background:#ffffff22;opacity:0;transition:opacity .4s}
+.card.lock .lockic{opacity:1}
+.cap{position:absolute;inset:auto 0 0 0;padding:26px 11px 10px;background:linear-gradient(transparent,#7a1530cc);color:#fff;font-weight:700;font-size:.92rem;text-align:left;transition:opacity .6s}
+.card.lock .cap{opacity:0}
+.step{margin:26px 0 6px;padding:20px 16px;border-radius:24px;background:var(--card);box-shadow:0 8px 24px #e11d4818}
+.step p{margin:0 0 14px;font-weight:700;font-size:1.1rem}
+.opts{display:flex;flex-direction:column;gap:10px}
+.heart{font-size:2.6rem;background:none;padding:6px 14px;transition:transform .15s}
+.heart:active{transform:scale(1.3)}
+.final{white-space:pre-line;font-family:Fraunces,Georgia,serif;font-style:italic;font-size:1.35rem;color:var(--wine);line-height:1.4}
+#music{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:12px;z-index:60;padding:9px 13px;font-size:1.1rem;background:var(--card);display:none}
+.spark{position:fixed;z-index:90;pointer-events:none;font-size:20px;left:0;top:0}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important;transition-duration:.01s!important}}
+</style>
+</head>
+<body>
+<div id="bg" aria-hidden="true"></div>
+<button id="music" class="soft" aria-label="Música">🎵</button>
+
+<!-- PANTALLA 1: la pregunta -->
+<section class="screen on" id="s1">
+  <p class="pre" id="t-pre"></p>
+  <h1 class="q" id="t-q"></h1>
+  <div class="btns">
+    <button class="yes" id="yes"></button>
+    <button class="no" id="no"></button>
+  </div>
+  <div class="msg" id="msg" aria-live="polite"></div>
+</section>
+
+<!-- PANTALLA 2: celebración -->
+<section class="screen" id="s2">
+  <h2 class="big" id="t-yes"></h2>
+  <button class="cta" id="toGallery"></button>
+</section>
+
+<!-- PANTALLA 3: galería -->
+<section class="screen" id="s3">
+  <div class="wrap">
+    <h2 class="big" id="t-gal" style="margin-bottom:.3em;font-size:clamp(1.6rem,7vw,2.4rem)"></h2>
+    <p class="sub" id="t-for"></p>
+    <div class="grid" id="grid"></div>
+    <div class="step" id="step"></div>
+  </div>
+</section>
+
+<script>
+/* =====================================================
+   ✏️ CONFIGURACIÓN — todo lo editable está aquí
+   ===================================================== */
+const CONFIG = {
+  name: "Pamela",                        // ✏️ Nombre de la persona
+  pre: "Hola Pamela 🌸 Antes de continuar…",   // ✏️ Saludo superior
+  question: "¿Me quieres? ❤️",           // ✏️ Pregunta principal
+  yesLabel: "Sí ❤️",
+  noLabel: "No",
+  yesMessage: "Sabía que ibas a decir que sí ❤️",
+  galleryBtn: "Hay algo más que quisiera decirte 💌",
+  galleryTitle: "Razones por las que algún día dejaría de quererte 😼",
+  // ✏️ Mensajes graciosos del botón "No" (aparecen cada 2 intentos)
+  noMessages: ["¿Segura? 👀","Creo que ese botón está dañado 😂","Intenta con el otro ❤️","El botón No está temporalmente fuera de servicio 😌","Vamos… sabes cuál debes elegir 🥹","¿De verdad? 😭"],
+  // ✏️ FOTOS: pon la ruta o URL en "src". Si src está vacío se usa un marcador de posición.
+  photos: [
+    { src: "", caption: "Cuando el universo deje de extenderse" },
+    { src: "", caption: "Cuando don Ramón pague la renta" },
+    { src: "", caption: "Cuando el coyote atrape al correcaminos" },
+    { src: "", caption: "Cuando la pizza con piña gane el Nobel" }
+  ],
+  // ✏️ Pasos para desbloquear fotos 2, 3 y 4
+  step2: { text: "Todavía hay más razones esperando…", button: "Ver otra razón 😼" },
+  step3: { text: "Pregunta clave: ¿cuál de estas razones crees que me haría dejar de quererte?",
+           options: ["A: Ninguna, todas son imposibles","B: La opción A","C: La opción A y B"],
+           reply: "Exacto: todas son igual de imposibles 😍" },
+  step4: { text: "Presiona 5 veces el corazón 💗" },
+  finalMessage: "Ahora estás obligada a quererme mucho y ya no olvidarte de mí.\nTe echo mucho de menos, att: Kevin :P", // ✏️ Mensaje final
+  music: ""                              // ✏️ Ruta de la canción (ej: "cancion.mp3"). Vacío = sin música
+};
+
+/* ===================== CÓDIGO ===================== */
+const $ = id => document.getElementById(id);
+const reduce = matchMedia('(prefers-reduced-motion:reduce)').matches;
+const rnd = (a,b) => a + Math.random()*(b-a);
+
+// Textos
+$('t-pre').textContent = CONFIG.pre;
+$('t-q').textContent = CONFIG.question;
+$('yes').textContent = CONFIG.yesLabel;
+$('no').textContent = CONFIG.noLabel;
+$('t-yes').textContent = CONFIG.yesMessage;
+$('toGallery').textContent = CONFIG.galleryBtn;
+$('t-gal').textContent = CONFIG.galleryTitle;
+$('t-for').textContent = "Para " + CONFIG.name + ", con mucho cariño de la persona a quien siempre olvidas y quieres lejos de ti :(";
+
+// Corazones flotantes de fondo
+(function(){
+  const bg = $('bg'), em = ['❤️','🌸','✨','💗','💫','🤍'];
+  for(let i=0;i<16;i++){
+    const s = document.createElement('span');
+    s.textContent = em[i % em.length];
+    s.style.cssText = `left:${rnd(2,96)}%;font-size:${rnd(14,30)}px;animation-duration:${rnd(9,17)}s;animation-delay:${rnd(0,12)}s`;
+    bg.appendChild(s);
+  }
+})();
+
+// Partículas
+function burst(x,y,n=18,set=['❤️','✨','💖','🌸','💫']){
+  if(reduce) return;
+  for(let i=0;i<n;i++){
+    const s = document.createElement('span');
+    s.className = 'spark';
+    s.textContent = set[i % set.length];
+    document.body.appendChild(s);
+    const a = rnd(0,6.28), d = rnd(60,170);
+    s.animate([
+      {transform:`translate(${x}px,${y}px) scale(.4)`,opacity:1},
+      {transform:`translate(${x+Math.cos(a)*d}px,${y+Math.sin(a)*d-40}px) scale(${rnd(.9,1.6)}) rotate(${rnd(-60,60)}deg)`,opacity:0}
+    ],{duration:rnd(900,1500),easing:'cubic-bezier(.2,.8,.3,1)'}).onfinish = () => s.remove();
+  }
+}
+function rain(n=36){
+  if(reduce) return;
+  const set = ['❤️','💖','🌸','✨','💗'];
+  for(let i=0;i<n;i++){
+    const s = document.createElement('span');
+    s.className = 'spark';
+    s.textContent = set[i % set.length];
+    s.style.fontSize = rnd(18,34)+'px';
+    document.body.appendChild(s);
+    const x = rnd(0,innerWidth-30);
+    s.animate([
+      {transform:`translate(${x}px,-40px) rotate(0)`,opacity:1},
+      {transform:`translate(${x+rnd(-60,60)}px,${innerHeight+40}px) rotate(${rnd(-200,200)}deg)`,opacity:.9}
+    ],{duration:rnd(1800,3200),delay:rnd(0,900),easing:'ease-in',fill:'backwards'}).onfinish = () => s.remove();
+  }
+}
+
+// Navegación entre pantallas
+function show(id){
+  document.querySelectorAll('.screen').forEach(s => s.classList.toggle('on', s.id === id));
+}
+
+// ---------- Botón "No" que huye ----------
+const no = $('no'), yes = $('yes'), msg = $('msg');
+const holder = document.createElement('span');
+let tries = 0, flying = false, lastDodge = 0;
+
+function dodge(){
+  const now = Date.now();
+  if(now - lastDodge < 200) return;
+  lastDodge = now;
+  if(!flying){
+    const r = no.getBoundingClientRect();
+    holder.style.cssText = `display:inline-block;width:${r.width}px;height:${r.height}px`;
+    no.before(holder);
+    no.classList.add('fly');
+    no.style.left = r.left + 'px';
+    no.style.top = r.top + 'px';
+    flying = true;
+    void no.offsetWidth;
+  }
+  tries++;
+  const W = innerWidth, H = innerHeight, m = 14;
+  const b = no.getBoundingClientRect(), y = yes.getBoundingClientRect();
+  let nx, ny;
+  for(let i=0;i<20;i++){
+    nx = rnd(m, W - b.width - m);
+    ny = rnd(m + 24, H - b.height - m - 24);
+    const overlapsYes = nx < y.right+18 && nx+b.width > y.left-18 && ny < y.bottom+18 && ny+b.height > y.top-18;
+    const far = Math.hypot(nx-b.left, ny-b.top) > 90;
+    if(!overlapsYes && far) break;
+  }
+  no.style.left = nx + 'px';
+  no.style.top = ny + 'px';
+  no.style.transform = `scale(${Math.max(.8, 1 - tries*.02)})`;
+  yes.style.transform = `scale(${Math.min(1.4, 1 + tries*.04)})`;
+  if(tries % 2 === 0){
+    msg.textContent = CONFIG.noMessages[(tries/2 - 1) % CONFIG.noMessages.length];
+    msg.classList.remove('pop'); void msg.offsetWidth; msg.classList.add('pop');
+  }
+}
+// Táctil: se esquiva al tocarlo, sin permitir el clic ni el scroll
+no.addEventListener('pointerdown', e => { e.preventDefault(); dodge(); });
+no.addEventListener('touchstart', e => { e.preventDefault(); dodge(); }, {passive:false});
+no.addEventListener('click', e => { e.preventDefault(); dodge(); });
+// Ratón: se esquiva al acercarse
+no.addEventListener('pointerenter', e => { if(e.pointerType === 'mouse') dodge(); });
+document.addEventListener('pointermove', e => {
+  if(e.pointerType !== 'mouse' || !flying) return;
+  const r = no.getBoundingClientRect();
+  if(Math.hypot(e.clientX-(r.left+r.width/2), e.clientY-(r.top+r.height/2)) < 90) dodge();
+});
+// Evita que la pantalla inicial haga scroll en móvil
+$('s1').addEventListener('touchmove', e => e.preventDefault(), {passive:false});
+addEventListener('resize', () => {
+  if(!flying) return;
+  const b = no.getBoundingClientRect();
+  no.style.left = Math.min(Math.max(14,b.left), innerWidth-b.width-14) + 'px';
+  no.style.top = Math.min(Math.max(14,b.top), innerHeight-b.height-14) + 'px';
+});
+
+// ---------- Galería ----------
+const grid = $('grid'), step = $('step');
+// Gatitos ilustrados (SVG integrado). ✏️ Si pones una foto real en CONFIG.photos[].src, se usa en su lugar.
+function catSvg(fur){
+  return `<ellipse cx='150' cy='318' rx='72' ry='58' fill='${fur}'/>
+  <ellipse cx='118' cy='372' rx='22' ry='12' fill='${fur}'/><ellipse cx='182' cy='372' rx='22' ry='12' fill='${fur}'/>
+  <polygon points='96,176 104,122 142,160' fill='${fur}'/><polygon points='204,176 196,122 158,160' fill='${fur}'/>
+  <polygon points='108,164 110,138 130,158' fill='#ff9db4'/><polygon points='192,164 190,138 170,158' fill='#ff9db4'/>
+  <ellipse cx='150' cy='212' rx='64' ry='56' fill='${fur}'/>
+  <path d='M150 160 v14 M135 162 l3 12 M165 162 l-3 12' stroke='#0002' stroke-width='4' stroke-linecap='round'/>
+  <ellipse cx='127' cy='206' rx='7' ry='9' fill='#2a1a2e'/><ellipse cx='173' cy='206' rx='7' ry='9' fill='#2a1a2e'/>
+  <circle cx='130' cy='202' r='2.5' fill='#fff'/><circle cx='176' cy='202' r='2.5' fill='#fff'/>
+  <polygon points='144,222 156,222 150,230' fill='#ff7a9c'/>
+  <path d='M150 230 q-8 10 -16 4 M150 230 q8 10 16 4' stroke='#2a1a2e' stroke-width='2.5' fill='none' stroke-linecap='round'/>
+  <path d='M100 224 l-40 -6 M100 232 l-40 6 M200 224 l40 -6 M200 232 l40 6' stroke='#2a1a2e55' stroke-width='2' stroke-linecap='round'/>`;
+}
+const emo = (c,x,y,s) => `<text x='${x}' y='${y}' font-size='${s}' text-anchor='middle'>${c}</text>`;
+const SCENES = [
+  { bg:['#1b1b4b','#6a3fb0'], fur:'#ffb067',
+    deco:`<g fill='#fff'><circle cx='40' cy='50' r='2'/><circle cx='120' cy='30' r='3'/><circle cx='230' cy='60' r='2'/><circle cx='270' cy='150' r='3'/><circle cx='25' cy='170' r='2'/><circle cx='250' cy='250' r='2'/></g><circle cx='70' cy='95' r='26' fill='#ff8fab'/><ellipse cx='70' cy='95' rx='46' ry='10' fill='none' stroke='#fff' stroke-width='4' transform='rotate(-20 70 95)'/>`,
+    over:`<circle cx='150' cy='208' r='86' fill='#bfe9ff33' stroke='#fff' stroke-width='5'/>${emo('🌌',235,100,46)}${emo('↔️',245,340,34)}` },
+  { bg:['#ffe0ea','#ffb3c6'], fur:'#b8bcc8',
+    deco:`${emo('🏠',58,110,50)}${emo('💸',240,120,44)}`,
+    over:`<rect x='112' y='136' width='76' height='38' rx='5' fill='#2a1a2e'/><rect x='96' y='170' width='108' height='9' rx='4' fill='#2a1a2e'/><rect x='112' y='160' width='76' height='7' fill='#e11d48'/>${emo('💰',236,345,66)}` },
+  { bg:['#ffe9c7','#ffb88a'], fur:'#f6e3c5',
+    deco:`<polygon points='0,350 60,270 120,350' fill='#e9a36b'/><rect y='350' width='300' height='50' fill='#e9a36b'/>`,
+    over:`<rect x='18' y='300' width='96' height='62' fill='#b5793f'/><text x='66' y='338' font-size='20' font-weight='bold' fill='#fff' text-anchor='middle' font-family='sans-serif'>ACME</text>${emo('🐦',250,356,46)}${emo('💨',206,356,28)}<rect x='165' y='56' width='116' height='42' rx='16' fill='#fff'/><polygon points='230,98 246,98 252,120' fill='#fff'/><text x='223' y='84' font-size='18' font-weight='bold' fill='#2a1a2e' text-anchor='middle' font-family='sans-serif'>¡Bip bip!</text><path d='M146 236 q4 22 10 0' fill='#ff5c7a'/>` },
+  { bg:['#e7d6ff','#ffc2d1'], fur:'#ffb067',
+    deco:`${emo('🏆',244,104,56)}${emo('✨',48,100,36)}`,
+    over:`<rect x='104' y='194' width='42' height='24' rx='10' fill='#111'/><rect x='154' y='194' width='42' height='24' rx='10' fill='#111'/><rect x='144' y='199' width='12' height='5' fill='#111'/><path d='M130 258 l20 30 l20 -30' stroke='#e11d48' stroke-width='8' fill='none'/><circle cx='150' cy='298' r='16' fill='#ffd24a' stroke='#e6a800' stroke-width='3'/>${emo('🍕',62,335,64)}` }
+];
+function placeholder(i){
+  const S = SCENES[i % SCENES.length];
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 400'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='${S.bg[0]}'/><stop offset='1' stop-color='${S.bg[1]}'/></linearGradient></defs><rect width='300' height='400' fill='url(#g)'/>${S.deco}${catSvg(S.fur)}${S.over}</svg>`;
+  return 'data:image/svg+xml,' + encodeURIComponent(svg);
+}
+const cards = CONFIG.photos.map((p,i) => {
+  const c = document.createElement('figure');
+  c.className = 'card lock';
+  c.style.margin = '0';
+  c.style.setProperty('--r', (i%2 ? 1.5 : -1.5) + 'deg');
+  const img = document.createElement('img');
+  img.src = p.src || placeholder(i);
+  img.alt = p.caption;
+  img.loading = 'lazy';
+  const l = document.createElement('div'); l.className = 'lockic'; l.textContent = '🔒';
+  const cap = document.createElement('figcaption'); cap.className = 'cap'; cap.textContent = p.caption;
+  c.append(img, l, cap);
+  grid.appendChild(c);
+  return c;
+});
+function unlock(i){
+  const c = cards[i]; if(!c) return;
+  c.classList.remove('lock');
+  const r = c.getBoundingClientRect();
+  burst(r.left + r.width/2, r.top + r.height/2, 16);
+  c.animate([{transform:'rotate(var(--r)) scale(.94)'},{transform:'rotate(var(--r)) scale(1.04)'},{transform:'rotate(var(--r)) scale(1)'}],{duration:600});
+}
+function setStep(html, build){
+  step.innerHTML = '';
+  step.classList.remove('pop'); void step.offsetWidth; step.classList.add('pop');
+  build(step);
+}
+function para(t, cls){ const p = document.createElement('p'); p.textContent = t; if(cls) p.className = cls; return p; }
+function btn(t, cls, fn){ const b = document.createElement('button'); b.textContent = t; b.className = cls; b.onclick = fn; return b; }
+
+function step2(){
+  setStep('', el => {
+    el.append(para(CONFIG.step2.text), btn(CONFIG.step2.button, 'cta', () => { unlock(1); step3(); scrollToStep(); }));
+  });
+}
+function step3(){
+  setStep('', el => {
+    el.append(para(CONFIG.step3.text));
+    const o = document.createElement('div'); o.className = 'opts';
+    CONFIG.step3.options.forEach(t => o.appendChild(btn(t, 'soft', () => {
+      el.innerHTML = ''; el.append(para(CONFIG.step3.reply));
+      unlock(2);
+      setTimeout(step4, 1600);
+    })));
+    el.appendChild(o);
+  });
+}
+function step4(){
+  let n = 0;
+  setStep('', el => {
+    el.append(para(CONFIG.step4.text));
+    const counter = para('0 / 5');
+    const h = btn('💗', 'heart', e => {
+      n++; counter.textContent = n + ' / 5';
+      burst(e.clientX || innerWidth/2, e.clientY || innerHeight/2, 6, ['💗','✨']);
+      if(n >= 5){ unlock(3); setTimeout(finish, 1200); h.disabled = true; }
+    });
+    el.append(h, counter);
+  });
+}
+function finish(){
+  setStep('', el => { el.append(para(CONFIG.finalMessage, 'final')); });
+  rain(30);
+  scrollToStep();
+}
+function scrollToStep(){ setTimeout(() => step.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'center'}), 150); }
+
+// ---------- Música (opcional) ----------
+let audio = null;
+if(CONFIG.music){
+  audio = new Audio(CONFIG.music); audio.loop = true;
+  const mb = $('music'); mb.style.display = 'block';
+  mb.onclick = () => { if(audio.paused){ audio.play(); mb.textContent = '🎵'; } else { audio.pause(); mb.textContent = '🔇'; } };
+}
+
+// ---------- Botón Sí ----------
+yes.addEventListener('click', e => {
+  const r = yes.getBoundingClientRect();
+  burst(r.left + r.width/2, r.top + r.height/2, 26);
+  rain();
+  if(audio) audio.play().catch(() => {});
+  no.style.visibility = 'hidden';
+  setTimeout(() => show('s2'), 500);
+});
+$('toGallery').addEventListener('click', () => {
+  show('s3');
+  setTimeout(() => { unlock(0); setTimeout(step2, 900); }, 700);
+});
+</script>
+</body>
+</html>
